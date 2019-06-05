@@ -10,6 +10,7 @@ Used https://curl.trillworks.com to translate curl from source
 IBM_API_KEY = "cbGnqfMQ7IF0rLqOo9uygpT0MoSjWvzTL0Oh2f6XB-kC" 
 IBM_API_URL = "https://gateway-lon.watsonplatform.net/natural-language-understanding/api"
 
+
 def get_categories_from_text(text):
     s = requests.Session()
     headers= {"Content-Type": "application/json"}
@@ -21,8 +22,8 @@ def get_categories_from_text(text):
     s.headers.update(headers)
     r = requests.post('https://gateway-lon.watsonplatform.net/natural-language-understanding/api/v1/analyze', headers=headers, params=params, data=data, auth=('apikey', IBM_API_KEY))
     # r = s.post(IBM_API_URL)#config.IBM_API_URL)
-    print(r.text)
+    return r.text
 
-text = "I like sport, mostly football. Mohamed Salah is my favorite player. I like going to gym aswell"
-get_categories_from_text(text)
-print(0)
+
+# text = "I like sport, mostly football. Robert Lewandowski is my favorite player. I like going to gym aswell"
+# print(get_categories_from_text(text))
