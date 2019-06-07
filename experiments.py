@@ -12,4 +12,5 @@ def analyze_db_users():
             categories_of_tweets[user].append(nlp._get_categories_from_text(tweet))
 
     print(0)
-analyze_db_users()
+if __name__ == "__main__":
+    analyze_db_users()
