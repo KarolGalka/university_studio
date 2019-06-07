@@ -14,9 +14,9 @@ def save_tweets(tweets: list, filename: str = "tweets.json"):
         json.dump(tweets, outfile)
 
 
-def main():
+def get_tweets_from_users(users: list):
     all_tweets = []
-    for user in USERS:
+    for user in users:
         timeline = TAPI.GetUserTimeline(screen_name=user, count=15)
         for tweet in timeline:
             all_tweets.append(tweet.text)
@@ -25,4 +25,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    get_tweets_from_users(USERS)
