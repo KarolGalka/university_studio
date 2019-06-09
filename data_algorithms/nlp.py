@@ -1,7 +1,6 @@
 import json
 
 import requests
-import re
 
 import unicodedata
 
@@ -9,7 +8,7 @@ import unicodedata
 Source: https://cloud.ibm.com/docs/services/natural-language-understanding?topic=natural-language-understanding-getting-started#getting-started-tutorial
 Used https://curl.trillworks.com to translate curl from source
 '''
-# TODO use config 
+
 IBM_API_KEY = "cbGnqfMQ7IF0rLqOo9uygpT0MoSjWvzTL0Oh2f6XB-kC"
 IBM_API_URL = "https://gateway-lon.watsonplatform.net/natural-language-understanding/api"
 
