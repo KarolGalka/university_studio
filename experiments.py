@@ -4,6 +4,7 @@ from tmp_base import USERS
 from tmp_touristic_proposals import PROPOSALS
 from collections import defaultdict
 
+
 def analyze_db_users():
     categories_of_tweets = defaultdict(list)
     for user in USERS:
@@ -12,5 +13,7 @@ def analyze_db_users():
             categories_of_tweets[user].append(nlp._get_categories_from_text(tweet))
 
     print(0)
+
+
 if __name__ == "__main__":
     analyze_db_users()

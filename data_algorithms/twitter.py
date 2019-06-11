@@ -12,6 +12,18 @@ def save_tweets(tweets: list, filename: str = "tweets2.json"):
     with open(filepath, "w+") as outfile:
         json.dump(tweets, outfile)
 
+
+def is_tweet_valuable(tweet):
+    tweet_full_text = tweet.text
+    urls_concatenated = ""
+
+    for url in tweet.urls:
+        urls_concatenated += url.url
+    if not len(tweet_full_text) - len(urls_concatenated) > 30:
+        return False
+
+    return True
+
+
 def find_user_tweets(user):
     return TAPI.GetUserTimeline(screen_name=user, count=30)
-
