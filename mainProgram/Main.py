@@ -63,22 +63,20 @@ def get_list_from_categories_documents(categories_document):
         category_list.add(document['name'])
     return category_list
 
-#
 
-def google_to_watson():
-    split = categories.split(" ")
-    for category in categories.split(" "):
-        category = category.replace("_", " ")
-        category_string = category + " " + category + " " + category + " " + category + " " + category
-        result_json = json.loads(data_algorithms.nlp.get_categories_from_text(category_string))
-        watson_category = get_categories(result_json)
-        print("Kategoria google: " + category + "\n Kategoria watson: " + " || ".join(watson_category))
+def get_categories_from_json():
+    with open('./resources/places.json') as json_file:
+        data = json.load()
+        return data
 
 
-author_categories_set = get_fitting_tweets_categories('PaulMcCartney')
-saved_categories_documents = databaseTest.read_all_categories()
-saved_categories_set = get_list_from_categories_documents(saved_categories_documents)
-categories_to_be_add = find_new_categories(author_categories_set, saved_categories_set)
-print(categories_to_be_add)
+
+
+
+# author_categories_set = get_fitting_tweets_categories('PaulMcCartney')
+# saved_categories_documents = databaseTest.read_all_categories()
+# saved_categories_set = get_list_from_categories_documents(saved_categories_documents)
+# categories_to_be_add = find_new_categories(author_categories_set, saved_categories_set)
+# print(categories_to_be_add)
 # if (len(categories_to_be_add) > 0):
 #     databaseTest.write_categories_to_database(categories_to_be_add)
