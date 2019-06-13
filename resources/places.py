@@ -52,3 +52,6 @@ PLACES = [
       "category" : "pets"
     }
   ]
+
+PLACES_DICT = {entry["category"]:entry["name"] for entry in PLACES}
+

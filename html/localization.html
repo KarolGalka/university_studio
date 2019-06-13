@@ -1,26 +1,59 @@
 <!DOCTYPE html>
 <html>
+
+<script type="text/javascript">
+    function find(url) {
+        var old = document.getElementById('ramka');
+        if(old != null){
+            old.parentNode.removeChild(old);
+        }
+
+        var iframe = document.createElement('iframe');
+        iframe.id = 'ramka'
+        iframe.width = '600';
+        iframe.height = 450;
+        iframe.style = "border:0";
+        iframe.allowFullscreen = true;
+        iframe.src = url;
+        document.body.appendChild(iframe);
+        console.log('iframe.contentWindow =', iframe.contentWindow);
+    }
+
+    function loadDoc() {
+        var xhttp = new XMLHttpRequest();
+        var place = document.getElementById("place").value;
+        xhttp.crossDomain = false;
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                find(this.responseText)
+                // document.getElementById("demo").innerHTML = this.responseText;
+            }
+        };
+        xhttp.open("GET", "http://127.0.0.1:5000/" + place, true);
+        xhttp.send();
+    }
+
+</script>
 <head>
     <title>Simple Map</title>
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
-    <!--<style>-->
-        <!--/* Always set the map height explicitly to define the size of the div-->
-         <!--* element that contains the map. */-->
-        <!--#map {-->
-            <!--height: 100%;-->
-        <!--}-->
-        <!--/* Optional: Makes the sample page fill the window. */-->
-        <!--html, body {-->
-            <!--height: 100%;-->
-            <!--margin: 0;-->
-            <!--padding: 0;-->
-        <!--}-->
-    <!--</style>-->
+
 </head>
 <body>
 
-<iframe width="600" height="450" frameborder="0" style="border:0"
-        src="https://www.google.pl/maps/embed/v1/place?q=Krak%C3%B3w+Krakowia&key=AIzaSyAvRyHILWzJ8SD2_yhhoOl46504G5uTKZQ" allowfullscreen></iframe>
+<div id="demo">
+    <h2>Let AJAX change this text</h2>
+    <form>
+        Enter No:<input type="text" id="place" name="place"/><br/>
+        <button type="button" onclick="loadDoc()">Get place</button>
+    </form>
+
+</div>
 </body>
+
+
+
+
+
 </html>

@@ -1,5 +1,5 @@
 import twitter
-from config import TWITTER_KEYS
+from ..config import TWITTER_KEYS
 import json
 import os
 
