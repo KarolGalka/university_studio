@@ -14,9 +14,9 @@ def main_page():
     return render_template('localization.html')
 
 
-@app.route('/<place>')
-def hello_world():#placename):
-    places = get_places()
+@app.route('/<nickname>')
+def hello_world(nickname):
+    places = get_places(nickname)
     print("PLACES: ", places)
     placename = places[0]
     placename:str = placename.replace(" ", "+")

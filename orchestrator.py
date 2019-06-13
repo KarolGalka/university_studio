@@ -76,8 +76,8 @@ def get_categories_from_json():
 #         result_json = json.loads(data_algorithms.nlp.get_categories_from_text(category_string))
 #         watson_category = get_categories(result_json)
 #         print("Kategoria google: " + category + "\n Kategoria watson: " + " || ".join(watson_category))
-def get_places():
-    username = gui.get_username()
+def get_places(username):
+    # username = gui.get_username()
     author_categories: set = get_fitting_tweets_categories(username)
     places = [PLACES_DICT[category] for category in author_categories]
     return places
