@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_cors import CORS
+from flask import render_template
 import os
 from .orchestrator import get_places
 
@@ -9,6 +10,11 @@ CORS(app)
 
 # Krak%C3%B3w+Krakowia
 @app.route('/')
+def main_page():
+    return render_template('localization.html')
+
+
+@app.route('/<place>')
 def hello_world():#placename):
     places = get_places()
     print("PLACES: ", places)
