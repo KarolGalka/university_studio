@@ -19,13 +19,13 @@ def main_page():
 
 @app.route('/<nickname>')
 def hello_world(nickname):
-    # places = get_places(nickname)
+    places = get_places(nickname)
 
-    # if(len(places) == 0):
-    #     return Response(status=404)
+    if(len(places) == 0):
+        return Response(status=404)
 
     # print("PLACES: ", places)
-    places = [{'entity': 'Muzeum Narodowe w Krakowie', 'category': 'art and entertainment'}, {'entity': 'Maxi Moda Kraków', 'category': 'style and fashion'}, {'entity': 'Ogród Zoologiczny w Krakowie', 'category': 'pets'}]
+    # places = [{'entity': 'Muzeum Narodowe w Krakowie', 'category': 'art and entertainment'}, {'entity': 'Maxi Moda Kraków', 'category': 'style and fashion'}, {'entity': 'Ogród Zoologiczny w Krakowie', 'category': 'pets'}]
     places_json = json.dumps(places)
     print(places_json)
 
@@ -35,4 +35,3 @@ def hello_world(nickname):
 
     # time.sleep(1)
     return places_json
-# 'https://www.google.pl/maps/embed/v1/place?key=AIzaSyAvRyHILWzJ8SD2_yhhoOl46504G5uTKZQ' + '&q=' + "krakow"

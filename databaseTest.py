@@ -22,8 +22,11 @@ def read_all_categories():
 def write_categories_to_database(category_names):
     client = MongoClient(MONGO_DB_URL)
     db = client.categories
-    for category_name in category_names:
-        entity = {'name' : category_name}
+    for name in category_names:
+        # entity = {'name' : category_name}
+        # print(entity)
+        # print(category_names[entity])
+        entity = {'name' : category_names[name], 'category' : name}
         db.tweet.insert_one(entity)
 
 

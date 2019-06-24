@@ -41,7 +41,8 @@ def get_all_saved_categories():
     categories_list = []
     categories_documents = databaseTest.read_all_categories()
     for document in categories_documents:
-        categories_list.append(document['name'])
+        print(document)
+        # categories_list.append(document['name'])
     return categories_list
 
 
@@ -67,26 +68,26 @@ def get_categories_from_json():
         data = json.load()
         return data
 
-# def google_to_watson():
-#     split = categories.split(" ")
-#     for category in categories.split(" "):
-#         category = category.replace("_", " ")
-#         category_string = category + " " + category + " " + category + " " + category + " " + category
-#         result_json = json.loads(data_algorithms.nlp.get_categories_from_text(category_string))
-#         watson_category = get_categories(result_json)
-#         print("Kategoria google: " + category + "\n Kategoria watson: " + " || ".join(watson_category))
 def get_places(username):
     author_categories: set = get_fitting_tweets_categories(username)
+    categories = get_all_saved_categories()
 
-    best_results = [{"entity": PLACES_DICT[category], "category":category} for category in author_categories]
+    categories = {entry["category"]:entry["name"] for entry in get_all_saved_categories()}
+
+
+    best_results = [{"entity": categories[category], "category":category} for category in author_categories]
     return best_results
     # gui.show_proposals(username, places, author_categories)
 # check username
 
-
+# categories = get_all_saved_categories()
+#
+# best_results = [{"entity": categories[category], "category":category} for category in ['']]
+# print(PLACES_DICT)
 # saved_categories_documents = databaseTest.read_all_categories()
 # saved_categories: set = get_list_from_categories_documents(saved_categories_documents)
 # categories_to_be_add = find_new_categories(author_categories, saved_categories)
 # print(categories_to_be_add)
 # if (len(categories_to_be_add) > 0):
-#     databaseTest.write_categories_to_database(categories_to_be_add)
+# print(PLACES_DICT)
+# databaseTest.write_categories_to_database(PLACES_DICT)
