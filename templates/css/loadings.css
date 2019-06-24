@@ -1,0 +1,31 @@
+.modalLoad {
+    display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 )
+    url('http://i.stack.imgur.com/FhHRx.gif')
+    50% 50%
+    no-repeat;
+}
+
+body.loading .modalLoad {
+    overflow: hidden;
+}
+
+/* Anytime the body has the loading class, our
+   modal element will be visible */
+body.loading .modalLoad {
+    display: block;
+}
+
+.myForm{
+    position: relative;
+    height: 50px;
+    font-size: 16px;
+    text-align: center;
+    border-radius: 0;
+}

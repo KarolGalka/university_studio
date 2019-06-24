@@ -2,7 +2,6 @@ from .data_algorithms import nlp
 import json
 from . import databaseTest
 from .data_algorithms import twitter_functions
-from .frontend import simple_gui as gui
 from .resources.places import PLACES_DICT
 #categories = "accounting airport amusement_park aquarium art_gallery atm bakery bank bar beauty_salon bicycle_store book_store bowling_alley bus_station cafe campground car_dealer car_rental " + "car_repair car_wash casino cemetery church city_hall clothing_store convenience_store courthouse dentist department_store doctor electrician electronics_store embassy fire_station " + "florist funeral_home furniture_store gas_station gym hair_care hardware_storehindu_temple home_goods_store hospital insurance_agency jewelry_store laundry lawyer library liquor_store " + "local_government_office locksmith lodging meal_delivery meal_takeaway mosque movie_rental movie_theater moving_company museum night_club painter park parking pet_store pharmacy physiotherapist plumber police post_office real_estate_agency " + "restaurant roofing_contractor rv_park school shoe_store shopping_mall spa stadium storage store subway_station supermarket synagogue taxi_stand train_station transit_station travel_agency veterinary_care zoo"
 
@@ -77,10 +76,10 @@ def get_categories_from_json():
 #         watson_category = get_categories(result_json)
 #         print("Kategoria google: " + category + "\n Kategoria watson: " + " || ".join(watson_category))
 def get_places(username):
-    # username = gui.get_username()
     author_categories: set = get_fitting_tweets_categories(username)
-    places = [PLACES_DICT[category] for category in author_categories]
-    return places
+
+    best_results = [{"entity": PLACES_DICT[category], "category":category} for category in author_categories]
+    return best_results
     # gui.show_proposals(username, places, author_categories)
 # check username
 

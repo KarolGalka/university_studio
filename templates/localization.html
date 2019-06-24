@@ -2,54 +2,227 @@
 <html>
 
 <script type="text/javascript">
-    function find(url) {
+    function find(json, user) {
         var old = document.getElementById('ramka');
         if(old != null){
             old.parentNode.removeChild(old);
         }
+        var main_div = document.createElement('section');
+        main_div.id = 'ramka';
+        main_div.className = 'text-center my-5';
+        document.body.appendChild(main_div);
 
-        var iframe = document.createElement('iframe');
-        iframe.id = 'ramka'
-        iframe.width = '600';
-        iframe.height = 450;
-        iframe.style = "border:0";
-        iframe.allowFullscreen = true;
-        iframe.src = url;
-        document.body.appendChild(iframe);
-        console.log('iframe.contentWindow =', iframe.contentWindow);
+        let info = document.createElement('h2');
+        info.className = '"h1-responsive font-weight-bold text-center my-5';
+        info.innerText = 'Hello ' + user;
+        main_div.appendChild(info);
+
+        let lesserInfo = document.createElement('p');
+        lesserInfo.className = 'grey-text text-center w-responsive mx-auto mb-5';
+        lesserInfo.innerText = 'Here are some places that may interests you';
+        main_div.appendChild(lesserInfo);
+
+        let rows = document.createElement('div');
+        rows.className = 'rows';
+        main_div.appendChild(rows);
+
+        let colors = ['info', 'default', 'secondary'];
+
+        for(i in json) {
+            let placeCategory = json[i];
+            let place = placeCategory.entity;
+            let category = placeCategory.category;
+            let placePrepared = place.replace(' ', '+');
+
+            let modal = document.createElement('div');
+            modal.id = 'modal' + i;
+            modal.className = 'modal fade';
+            modal.tabIndex = '-1';
+            modal.role = "dialog";
+            modal.setAttribute('aria-labelledby', 'myModalLabel');
+            modal.setAttribute('aria-hidden', 'true');
+            main_div.appendChild(modal);
+
+            let modalDialog = document.createElement('div');
+            modalDialog.className = 'modal-dialog modal-lg';
+            modalDialog.setAttribute('role', 'document');
+            modal.appendChild(modalDialog);
+
+            let modalContent = document.createElement('div');
+            modalContent.className = "modal-content";
+            modalDialog.appendChild(modalContent);
+
+            let modalBody = document.createElement('div');
+            modalBody.className = 'modal-body mb-0 p-0';
+            modalContent.appendChild(modalBody);
+
+            let map = document.createElement('div');
+            map.className = 'z-depth-1-half map-container-10';
+            map.setAttribute('style', 'height: 400px');
+            modalBody.appendChild(map);
+
+            let iframe = document.createElement('iframe');
+            iframe.width = '100%';
+            iframe.height = '100%';
+            iframe.style = "border:0";
+            iframe.allowFullscreen = true;
+            iframe.src = 'https://www.google.pl/maps/embed/v1/place?key=AIzaSyAvRyHILWzJ8SD2_yhhoOl46504G5uTKZQ' + '&q=' + placePrepared;
+            map.appendChild(iframe);
+
+
+            let footer = document.createElement('div');
+            footer.className = 'modal-footer justify-content-center';
+            modalContent.appendChild(footer);
+
+            let button1 = document.createElement('button');
+            button1.className = 'btn btn-outline-default btn-md';
+            button1.setAttribute('data-dismiss', 'modal');
+            button1.innerText = 'Close';
+            footer.appendChild(button1);
+
+            let button = document.createElement('button');
+            button.className = 'btn btn-' + colors[i % 3];
+            button.setAttribute('data-toggle', 'modal');
+            button.setAttribute('data-target', '#modal' + i);
+            button.innerText = category;
+            rows.appendChild(button);
+        }
+    }
+
+    function logError(user) {
+        var old = document.getElementById('ramka');
+        if(old != null){
+            old.parentNode.removeChild(old);
+        }
+        var main_div = document.createElement('section');
+        main_div.id = 'ramka';
+        main_div.className = 'container';
+        document.body.appendChild(main_div);
+
+        let section = document.createElement('section');
+        section.className = '"text-center my-5"';
+        main_div.appendChild(section);
+
+        let errorMessage = document.createElement('h2');
+        errorMessage.className = 'h1-responsive font-weight-bold text-center my-5';
+        errorMessage.innerText = 'Unable to load data from given user - ' + user;
+        section.appendChild(errorMessage);
+
+        document.body.appendChild(main_div);
+
     }
 
     function loadDoc() {
         var xhttp = new XMLHttpRequest();
-        var place = document.getElementById("place").value;
+        var twitterName = document.getElementById("place").value;
+        console.log(twitterName);
         xhttp.crossDomain = false;
+
         xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                find(this.responseText)
-                // document.getElementById("demo").innerHTML = this.responseText;
+            if (this.readyState == 4) {
+
+                if(this.status == 200){
+                    let json = JSON.parse(this.responseText);
+                    find(json);
+
+                } else {
+                    logError(twitterName);
+                }
+                document.body.className = '';
             }
         };
-        xhttp.open("GET", "http://127.0.0.1:5000/" + place, true);
+        document.body.className = 'loading';
+        xhttp.open("GET", "http://127.0.0.1:5000/" + twitterName, true);
         xhttp.send();
+
     }
 
 </script>
 <head>
     <title>Simple Map</title>
-    <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Material Design Bootstrap</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="static/css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="static/css/style.css" rel="stylesheet">
+    <link href="static/css/loadings.css" rel="stylesheet">
 </head>
 <body>
 
-<div id="demo">
-    <h2>Let AJAX change this text</h2>
-    <form>
-        Enter No:<input type="text" id="place" name="place"/><br/>
-        <button type="button" onclick="loadDoc()">Get place</button>
-    </form>
+<!--Navbar-->
+<nav class="navbar navbar-expand-lg navbar-dark blue lighten-2 mb-4">
 
+    <a class="navbar-brand">User finder</a>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <form class="form-inline ml-auto">
+            <div class="md-form my-0">
+                <input class="form-control" type="text" placeholder="Search" aria-label="Search" id="place" name="place">
+            </div>
+            <button class="btn btn-outline-white btn-md my-0 ml-sm-2" type="button" onclick="loadDoc()">Search</button>
+        </form>
+
+    </div>
+    <!-- Collapsible content -->
+
+</nav>
+<!--/.Navbar-->
+
+
+<div id="demo">
+
+    <div class="modalLoad"><!-- Place at bottom of page --></div>
+
+    <!-- Projects section v.4 -->
+    <section class="text-center my-5">
+
+        <!-- Section heading -->
+        <h2 class="h1-responsive font-weight-bold text-center my-5">Online travel agency</h2>
+        <!-- Section description -->
+        <p class="grey-text text-center w-responsive mx-auto mb-5">Please enter your english based twitter profile for us to find fitting places in Cracow for you to visit</p>
+
+
+
+
+        <!--<div class="md-form active-pink active-pink-2 mb-3 mt-0">-->
+        <!--<form class="form-inline md-form mr-auto mb-4">-->
+            <!--<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" id="place" name="place"/>-->
+            <!--<button type="button" class="btn aqua-gradient btn-rounded btn-sm my-0" onclick="loadDoc()">Search</button>-->
+        <!--</form>-->
+        <!--</div>-->
+
+
+    </section>
+    <!--<form class="text-center border border-light p-5">-->
+
+        <!--&lt;!&ndash; Email &ndash;&gt;-->
+        <!--<input type="email" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="Twitter username">-->
+        <!--&lt;!&ndash; Sign in button &ndash;&gt;-->
+        <!--<button class="btn btn-info btn-block my-4" type="submit">Search</button>-->
+
+    <!--</form>-->
+    <!-- Projects section v.4 -->
 </div>
+
+
+<!-- SCRIPTS -->
+<!-- JQuery -->
+<script type="text/javascript" src="static/js/jquery-3.4.1.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="static/js/popper.min.js"></script>
+<!-- Bootstrap core JavaScript  -->
+<script type="text/javascript" src="static/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="static/js/mdb.min.js"></script>
 </body>
 
 

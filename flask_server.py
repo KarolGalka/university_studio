@@ -1,7 +1,10 @@
 from flask import Flask
 from flask_cors import CORS
 from flask import render_template
+import json
 import os
+import time
+from flask import Response
 from .orchestrator import get_places
 
 print(os.getcwd())
@@ -16,8 +19,20 @@ def main_page():
 
 @app.route('/<nickname>')
 def hello_world(nickname):
-    places = get_places(nickname)
-    print("PLACES: ", places)
-    placename = places[0]
-    placename:str = placename.replace(" ", "+")
-    return 'https://www.google.pl/maps/embed/v1/place?key=AIzaSyAvRyHILWzJ8SD2_yhhoOl46504G5uTKZQ' + '&q=' + placename
+    # places = get_places(nickname)
+
+    # if(len(places) == 0):
+    #     return Response(status=404)
+
+    # print("PLACES: ", places)
+    places = [{'entity': 'Muzeum Narodowe w Krakowie', 'category': 'art and entertainment'}, {'entity': 'Maxi Moda Kraków', 'category': 'style and fashion'}, {'entity': 'Ogród Zoologiczny w Krakowie', 'category': 'pets'}]
+    places_json = json.dumps(places)
+    print(places_json)
+
+    # if(places)
+
+
+
+    # time.sleep(1)
+    return places_json
+# 'https://www.google.pl/maps/embed/v1/place?key=AIzaSyAvRyHILWzJ8SD2_yhhoOl46504G5uTKZQ' + '&q=' + "krakow"
